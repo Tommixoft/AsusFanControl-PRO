@@ -24,40 +24,48 @@ namespace AsusFanControl.Core
 
         public int GetTargetSpeed(int currentTemp)
         {
-            if (Points == null || Points.Count == 0)
-                return 0;
-
-            // Sort points by temperature
-            var sortedPoints = Points.OrderBy(p => p.Temperature).ToList();
-
-            // If below first point
-            if (currentTemp <= sortedPoints.First().Temperature)
-                return sortedPoints.First().Speed;
-
-            // If above last point
-            if (currentTemp >= sortedPoints.Last().Temperature)
-                return sortedPoints.Last().Speed;
-
-            // Interpolate
-            for (int i = 0; i < sortedPoints.Count - 1; i++)
+            try
             {
-                var p1 = sortedPoints[i];
-                var p2 = sortedPoints[i + 1];
+                if (Points == null || Points.Count == 0)
+                    return 0;
 
-                if (currentTemp >= p1.Temperature && currentTemp <= p2.Temperature)
+                // Sort points by temperature
+                var sortedPoints = Points.OrderBy(p => p.Temperature).ToList();
+
+                // If below first point
+                if (currentTemp <= sortedPoints.First().Temperature)
+                    return sortedPoints.First().Speed;
+
+                // If above last point
+                if (currentTemp >= sortedPoints.Last().Temperature)
+                    return sortedPoints.Last().Speed;
+
+                // Interpolate
+                for (int i = 0; i < sortedPoints.Count - 1; i++)
                 {
-                    if (p1.Temperature == p2.Temperature)
-                        return p2.Speed;
+                    var p1 = sortedPoints[i];
+                    var p2 = sortedPoints[i + 1];
 
-                    // Linear interpolation
-                    // speed = s1 + (s2 - s1) * (temp - t1) / (t2 - t1)
-                    double tRatio = (double)(currentTemp - p1.Temperature) / (p2.Temperature - p1.Temperature);
-                    int speed = (int)(p1.Speed + (p2.Speed - p1.Speed) * tRatio);
-                    return speed;
+                    if (currentTemp >= p1.Temperature && currentTemp <= p2.Temperature)
+                    {
+                        if (p1.Temperature == p2.Temperature)
+                            return p2.Speed;
+
+                        // Linear interpolation
+                        // speed = s1 + (s2 - s1) * (temp - t1) / (t2 - t1)
+                        double tRatio = (double)(currentTemp - p1.Temperature) / (p2.Temperature - p1.Temperature);
+                        int speed = (int)(p1.Speed + (p2.Speed - p1.Speed) * tRatio);
+                        return speed;
+                    }
                 }
-            }
 
-            return sortedPoints.Last().Speed;
+                return sortedPoints.Last().Speed;
+            }
+            catch (Exception error)
+            {
+                return 80;
+                throw;
+            }
         }
 
         public override string ToString()

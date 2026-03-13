@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsusFanControl", "AsusFanCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsusFanControlGUI", "AsusFanControlGUI\AsusFanControlGUI.csproj", "{42CC78B6-E3BB-4092-A423-A4EC20FB3C11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsusFanControl.Core", "AsusFanControl.Core\AsusFanControl.Core.csproj", "{361686A9-72BA-E902-A700-21BC8C54F0BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{42CC78B6-E3BB-4092-A423-A4EC20FB3C11}.Debug|x64.Build.0 = Debug|x64
 		{42CC78B6-E3BB-4092-A423-A4EC20FB3C11}.Release|x64.ActiveCfg = Release|x64
 		{42CC78B6-E3BB-4092-A423-A4EC20FB3C11}.Release|x64.Build.0 = Release|x64
+		{361686A9-72BA-E902-A700-21BC8C54F0BE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{361686A9-72BA-E902-A700-21BC8C54F0BE}.Debug|x64.Build.0 = Debug|Any CPU
+		{361686A9-72BA-E902-A700-21BC8C54F0BE}.Release|x64.ActiveCfg = Release|Any CPU
+		{361686A9-72BA-E902-A700-21BC8C54F0BE}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

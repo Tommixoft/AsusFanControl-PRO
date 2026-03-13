@@ -115,7 +115,7 @@ namespace AsusFanControl.Core
 
         public ulong Thermal_Read_Cpu_Temperature()
         {
-            if (_disposed) return 0;
+            if (_disposed) return 99;
             return AsusWinIO64.Thermal_Read_Cpu_Temperature();
         }
 
