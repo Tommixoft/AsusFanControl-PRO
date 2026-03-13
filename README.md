@@ -1,4 +1,4 @@
-# Asus Fan Control
+# Asus Fan Control with curve
 
 ### Download
 Go to [releases](../../releases)
@@ -19,10 +19,11 @@ Go to [releases](../../releases)
 
 GUI: `AsusFanControlGUI.exe`  
 
-![AsusFanControlGUI](https://github.com/Karmel0x/AsusFanControl/assets/25367564/fe197ad0-7079-4d51-ae78-177cb6369e96)
+![AsusFanControlGUI](https://github.com/Tommixoft/AsusFanControl-PRO/blob/master/app.png)
+![Curve editor](https://github.com/Tommixoft/AsusFanControl-PRO/blob/master/curve.png)
 
 ### Why need it?
-My laptop does not support the [Fan Profile](https://github.com/Karmel0x/AsusFanControl/assets/25367564/924d990a-bf20-4b8d-bf9d-56c460174d99) option, but it often overheats. Looked for apps to control fans, but none is working.
+My laptop does not support the [Fan Profile](https://github.com/Karmel0x/AsusFanControl/assets/25367564/924d990a-bf20-4b8d-bf9d-56c460174d99) option, but it often overheats. G-Helper did not work either. So this was born.
 
 ### Compatibility
 This program should work on any laptop with x64 windows where [Fan Diagnosis](https://github.com/Karmel0x/AsusFanControl/assets/25367564/7129833b-97af-4da8-9148-b71e49552ea4) in [MyASUS](https://apps.microsoft.com/store/detail/myasus/9N7R5S6B0ZZH) application is working as it is using same library.
