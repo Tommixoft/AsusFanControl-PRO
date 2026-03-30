@@ -57,11 +57,16 @@ namespace AsusFanControlGUI
                 return;
 
             ulong tempU = asusControl.Thermal_Read_Cpu_Temperature();
+
+            // Guard against hardware error codes (valid CPU temp: 0–120 °C)
+            if (tempU > 120)
+                return;
+
             int temp = (int)tempU;
 
             int targetSpeed = currentFanCurve.GetTargetSpeed(temp);
 
-            if (targetSpeed > fanSpeed || Math.Abs(targetSpeed - fanSpeed) > 2)
+            if (Math.Abs(targetSpeed - fanSpeed) > 2)
             {
                 fanSpeed = targetSpeed;
                 asusControl.SetFanSpeeds(targetSpeed);
@@ -122,6 +127,9 @@ namespace AsusFanControlGUI
                 {
                     components.Dispose();
                 }
+
+                trayIcon?.Dispose();
+                trayIcon = null;
 
                 // Custom cleanup
                 if (asusControl != null)

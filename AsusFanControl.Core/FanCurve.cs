@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,48 +23,36 @@ namespace AsusFanControl.Core
 
         public int GetTargetSpeed(int currentTemp)
         {
-            try
+            if (Points == null || Points.Count == 0)
+                return 0;
+
+            // Points are kept sorted by temperature (sorted on load and after edits).
+            // If below first point
+            if (currentTemp <= Points[0].Temperature)
+                return Points[0].Speed;
+
+            // If above last point
+            if (currentTemp >= Points[Points.Count - 1].Temperature)
+                return Points[Points.Count - 1].Speed;
+
+            // Interpolate
+            for (int i = 0; i < Points.Count - 1; i++)
             {
-                if (Points == null || Points.Count == 0)
-                    return 0;
+                var p1 = Points[i];
+                var p2 = Points[i + 1];
 
-                // Sort points by temperature
-                var sortedPoints = Points.OrderBy(p => p.Temperature).ToList();
-
-                // If below first point
-                if (currentTemp <= sortedPoints.First().Temperature)
-                    return sortedPoints.First().Speed;
-
-                // If above last point
-                if (currentTemp >= sortedPoints.Last().Temperature)
-                    return sortedPoints.Last().Speed;
-
-                // Interpolate
-                for (int i = 0; i < sortedPoints.Count - 1; i++)
+                if (currentTemp >= p1.Temperature && currentTemp <= p2.Temperature)
                 {
-                    var p1 = sortedPoints[i];
-                    var p2 = sortedPoints[i + 1];
+                    if (p1.Temperature == p2.Temperature)
+                        return p2.Speed;
 
-                    if (currentTemp >= p1.Temperature && currentTemp <= p2.Temperature)
-                    {
-                        if (p1.Temperature == p2.Temperature)
-                            return p2.Speed;
-
-                        // Linear interpolation
-                        // speed = s1 + (s2 - s1) * (temp - t1) / (t2 - t1)
-                        double tRatio = (double)(currentTemp - p1.Temperature) / (p2.Temperature - p1.Temperature);
-                        int speed = (int)(p1.Speed + (p2.Speed - p1.Speed) * tRatio);
-                        return speed;
-                    }
+                    // Linear interpolation: speed = s1 + (s2 - s1) * (temp - t1) / (t2 - t1)
+                    double tRatio = (double)(currentTemp - p1.Temperature) / (p2.Temperature - p1.Temperature);
+                    return (int)(p1.Speed + (p2.Speed - p1.Speed) * tRatio);
                 }
+            }
 
-                return sortedPoints.Last().Speed;
-            }
-            catch (Exception error)
-            {
-                return 80;
-                throw;
-            }
+            return Points[Points.Count - 1].Speed;
         }
 
         public override string ToString()
@@ -89,6 +76,7 @@ namespace AsusFanControl.Core
                     curve.Points.Add(new FanCurvePoint(t, s));
                 }
             }
+            curve.Points.Sort((a, b) => a.Temperature.CompareTo(b.Temperature));
             return curve;
         }
     }
