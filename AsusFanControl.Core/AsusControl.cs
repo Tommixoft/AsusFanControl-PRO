@@ -126,7 +126,7 @@ namespace AsusFanControl.Core
             for (byte fanIndex = 0; fanIndex < fanCount; fanIndex++)
             {
                 SetFanSpeed(0, fanIndex);
-                await Task.Delay(ResetCommandDelayMs);
+                await Task.Delay(ResetCommandDelayMs).ConfigureAwait(false);
             }
         }
     }
